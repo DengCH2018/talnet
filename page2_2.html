@@ -387,20 +387,42 @@
             border-left-color: #8bc34a;
         }
 
-        /* 雷达图容器 */
+        /* 雷达图容器 - 新增浅色背景 */
         .radar-container {
             margin: 20px auto 15px;
             width: 100%;
             max-width: 550px;
             position: relative;
             padding-bottom: 40px;
+            background-color: #ffffff; /* 白色背景 */
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 20px 15px;
+        }
+
+        .radar-title {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .radar-chart-wrapper {
+            width: 100%;
+            background-color: #f8fafc; /* 浅灰色背景 */
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #eef2f7;
         }
 
         .radar-chart {
             width: 100%;
             height: 350px;
             position: relative;
-            margin-bottom: 25px;
+            margin: 0 auto;
         }
 
         canvas {
@@ -408,6 +430,64 @@
             margin: 0 auto;
             max-width: 100%;
             height: auto;
+        }
+
+        /* 雷达图标签 */
+        .radar-labels {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #e0e0e0;
+        }
+
+        .radar-label {
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #666;
+            padding: 5px 10px;
+            background-color: #f8f8f8;
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+
+        .radar-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+            flex-shrink: 0;
+        }
+
+        /* 暗色模式适配 */
+        @media (prefers-color-scheme: dark) {
+            .radar-container {
+                background-color: #1e293b; /* 深色背景 */
+                border-color: #334155;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .radar-chart-wrapper {
+                background-color: #0f172a; /* 更深的背景 */
+                border-color: #1e293b;
+            }
+
+            .radar-labels {
+                border-top-color: #334155;
+            }
+
+            .radar-label {
+                background-color: #1e293b;
+                border-color: #334155;
+                color: #cbd5e1;
+            }
+
+            .radar-title {
+                color: #cbd5e1;
+            }
         }
 
         /* 天赋分值表格 */
@@ -501,8 +581,8 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 8px;
-            margin-top: 30px;
-            padding-top: 20px;
+            margin-top: 15px;
+            padding-top: 15px;
             border-top: 1px dashed #e0e0e0;
         }
 
@@ -641,8 +721,8 @@
             }
 
             .radar-labels {
-                margin-top: 25px;
-                padding-top: 15px;
+                margin-top: 15px;
+                padding-top: 10px;
             }
 
             .top-talents {
@@ -699,12 +779,20 @@
             }
 
             .radar-labels {
-                margin-top: 35px;
-                padding-top: 25px;
+                margin-top: 20px;
+                padding-top: 20px;
             }
 
             .top-talents {
                 margin: 25px 0;
+                padding: 20px;
+            }
+
+            .radar-container {
+                padding: 25px 20px;
+            }
+
+            .radar-chart-wrapper {
                 padding: 20px;
             }
         }
@@ -757,8 +845,8 @@
             }
 
             .radar-labels {
-                margin-top: 25px;
-                padding-top: 15px;
+                margin-top: 15px;
+                padding-top: 10px;
                 gap: 6px;
             }
 
@@ -777,6 +865,14 @@
 
             .talent-desc {
                 font-size: 0.85rem;
+            }
+
+            .radar-container {
+                padding: 15px 10px;
+            }
+
+            .radar-chart-wrapper {
+                padding: 10px;
             }
         }
 
@@ -800,6 +896,42 @@
             .radar-chart {
                 height: 280px;
             }
+
+            .radar-container {
+                padding: 12px 8px;
+            }
+
+            .radar-chart-wrapper {
+                padding: 8px;
+            }
+        }
+
+        /* 暗色模式适配 */
+        @media (prefers-color-scheme: dark) {
+            .radar-container {
+                background-color: #1e293b; /* 深色背景 */
+                border-color: #334155;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .radar-chart-wrapper {
+                background-color: #0f172a; /* 更深的背景 */
+                border-color: #1e293b;
+            }
+
+            .radar-labels {
+                border-top-color: #334155;
+            }
+
+            .radar-label {
+                background-color: #1e293b;
+                border-color: #334155;
+                color: #cbd5e1;
+            }
+
+            .radar-title {
+                color: #cbd5e1;
+            }
         }
     </style>
 </head>
@@ -809,6 +941,7 @@
         <div class="header">
             <h1>天赋自测</h1>
             <p>本测试来自《做自己擅长的事，还是喜欢的？》，作者为Aljoscha Neubauer。本测试不会收集任何用户信息，关闭页面后数据将自动删除，请放心测试。越诚实地回答下列问题测试结果将会越准确。</p>
+            <p>（tips:PC端如果页面显示不全，请减少页面缩放比例即可。）
         </div>
 
         <!-- 主要内容区域 -->
@@ -856,10 +989,13 @@
                         <!-- 前三名天赋将通过JS动态生成 -->
                     </div>
 
-                    <!-- 雷达图容器 -->
+                    <!-- 雷达图容器 - 新增浅色背景包装 -->
                     <div class="radar-container">
-                        <div class="radar-chart">
-                            <canvas id="radarChart" width="600" height="400"></canvas>
+                        <div class="radar-title">天赋雷达图</div>
+                        <div class="radar-chart-wrapper">
+                            <div class="radar-chart">
+                                <canvas id="radarChart" width="600" height="400"></canvas>
+                            </div>
                         </div>
                         <div class="radar-labels" id="radarLabels"></div>
                     </div>
@@ -879,7 +1015,7 @@
     </div>
 
     <script>
-        // 问题数据 - 重新确认每个问题对应的天赋类型
+        // 问题数据
         const questions = [
             { id: 1, text: "我喜欢用艺术性的方法做事？", category: "美学天赋" },
             { id: 2, text: "我乐于给别人传授知识？", category: "人际天赋" },
@@ -922,13 +1058,6 @@
             { id: 39, text: "我乐于学习不同种类的乐器？", category: "音乐天赋" },
             { id: 40, text: "我擅长在人与人之间斡旋？", category: "人际天赋" }
         ];
-
-        // 先统计每个天赋的问题数量
-        const categoryQuestionCounts = {};
-        questions.forEach(question => {
-            categoryQuestionCounts[question.category] = (categoryQuestionCounts[question.category] || 0) + 1;
-        });
-        console.log("每个天赋的问题数量:", categoryQuestionCounts);
 
         // 选项配置
         const options = [
@@ -1109,9 +1238,14 @@
         function selectAnswer(optionIndex, value) {
             const currentIndex = appState.currentQuestionIndex;
 
+            console.log(`选择答案: 第${currentIndex + 1}题, 选项${optionIndex + 1}, 值: ${value}`);
+
             // 保存答案
             appState.answers[currentIndex] = value;
             appState.selectedOptionIndex = optionIndex;
+
+            // 验证答案是否保存成功
+            console.log(`保存的答案: appState.answers[${currentIndex}] = ${appState.answers[currentIndex]}`);
 
             // 更新UI
             const optionBtns = document.querySelectorAll('.option-btn');
@@ -1124,21 +1258,22 @@
             // 保存进度
             saveProgress();
 
+            // 如果是最后一题，不自动跳转
+            if (currentIndex === appState.totalQuestions - 1) {
+                console.log("最后一题，等待用户点击查看结果");
+                return;
+            }
+
             // 延迟300ms后自动进入下一题
             setTimeout(() => {
-                if (currentIndex < appState.totalQuestions - 1) {
-                    // 如果不是最后一题，自动进入下一题
+                // 再次验证当前答案已保存
+                if (appState.answers[currentIndex] === value) {
+                    console.log(`确认答案已保存，跳转到第${currentIndex + 2}题`);
                     nextQuestion();
                 } else {
-                    // 如果是最后一题，检查是否应该自动显示结果
-                    if (nextBtn.textContent === '查看结果' && !nextBtn.disabled) {
-                        // 延迟一小段时间让用户看到选择效果
-                        setTimeout(() => {
-                            showResults();
-                        }, 200);
-                    }
+                    console.error("答案未正确保存，取消自动跳转");
                 }
-            }, 100);
+            }, 10);
         }
 
         // 转到下一题
@@ -1147,11 +1282,13 @@
 
             // 如果是最后一题，显示结果
             if (currentIndex === appState.totalQuestions - 1) {
+                console.log("显示结果页面");
                 showResults();
                 return;
             }
 
             // 否则转到下一题
+            console.log(`从第${currentIndex + 1}题跳转到第${currentIndex + 2}题`);
             appState.currentQuestionIndex++;
             appState.selectedOptionIndex = null;
             renderQuestion();
@@ -1167,7 +1304,7 @@
             }
         }
 
-        // 绘制雷达图
+        // 绘制雷达图 - 不使用归一化处理
         function drawRadarChart(scores) {
             const canvas = document.getElementById('radarChart');
             const ctx = canvas.getContext('2d');
@@ -1185,14 +1322,13 @@
             const numAxes = talentTypes.length;
             const angleStep = (2 * Math.PI) / numAxes;
 
-            // 计算最大得分用于归一化
-            const maxPossibleScore = 20; // 每个天赋最多4题，每题5分，4*5=20
-            const actualMaxScore = Math.max(...Object.values(scores), maxPossibleScore);
+            // 不使用归一化，直接使用最大得分20分
+            const maxPossibleScore = 20;
 
             // 清除画布
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // 绘制网格 - 改为5个同心圆（对应0-20分，每5分一格）
+            // 绘制网格 - 5个同心圆对应0-20分，每4分一格
             ctx.strokeStyle = '#e0e0e0';
             ctx.lineWidth = 1;
 
@@ -1214,13 +1350,13 @@
                 ctx.closePath();
                 ctx.stroke();
 
-                // 绘制刻度标签（0, 5, 10, 15, 20）
-                const scoreValue = i * 5;
+                // 绘制刻度标签（0, 4, 8, 12, 16, 20）
+                const scoreValue = i * 4;
                 const labelAngle = -Math.PI / 2;
                 const labelX = centerX + gridRadius * Math.cos(labelAngle);
                 const labelY = centerY + gridRadius * Math.sin(labelAngle) - 10;
 
-                ctx.fillStyle = '#999';
+                ctx.fillStyle = '#666';
                 ctx.font = '10px Arial';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
@@ -1241,9 +1377,9 @@
                 ctx.lineTo(x, y);
                 ctx.stroke();
 
-                // 绘制标签 - 调整标签位置
-                ctx.fillStyle = '#333';
-                ctx.font = '12px Arial';
+                // 绘制标签
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 12px Arial';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
 
@@ -1262,20 +1398,32 @@
                 const labelX = centerX + (radius + labelOffset) * Math.cos(angle);
                 const labelY = centerY + (radius + labelOffset) * Math.sin(angle);
 
+                // 添加文本阴影以提高可读性
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+                ctx.shadowBlur = 3;
+                ctx.shadowOffsetX = 1;
+                ctx.shadowOffsetY = 1;
+
                 const shortLabel = type.replace('天赋', '').replace('逻辑-算术', '逻辑');
                 ctx.fillText(shortLabel, labelX, labelY);
+
+                // 清除阴影效果
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
             });
 
-            // 绘制数据多边形
+            // 绘制数据多边形 - 直接使用原始分值
             ctx.beginPath();
             talentTypes.forEach((type, i) => {
                 const score = scores[type];
-                // 使用20作为最大得分进行归一化
-                const normalizedScore = (score / maxPossibleScore) * radius;
+                // 不使用归一化，直接根据实际得分计算半径
+                const scoreRadius = (score / maxPossibleScore) * radius;
 
                 const angle = i * angleStep - Math.PI / 2;
-                const x = centerX + normalizedScore * Math.cos(angle);
-                const y = centerY + normalizedScore * Math.sin(angle);
+                const x = centerX + scoreRadius * Math.cos(angle);
+                const y = centerY + scoreRadius * Math.sin(angle);
 
                 if (i === 0) {
                     ctx.moveTo(x, y);
@@ -1294,12 +1442,12 @@
             // 绘制数据点
             talentTypes.forEach((type, i) => {
                 const score = scores[type];
-                // 使用20作为最大得分进行归一化
-                const normalizedScore = (score / maxPossibleScore) * radius;
+                // 不使用归一化，直接根据实际得分计算半径
+                const scoreRadius = (score / maxPossibleScore) * radius;
 
                 const angle = i * angleStep - Math.PI / 2;
-                const x = centerX + normalizedScore * Math.cos(angle);
-                const y = centerY + normalizedScore * Math.sin(angle);
+                const x = centerX + scoreRadius * Math.cos(angle);
+                const y = centerY + scoreRadius * Math.sin(angle);
 
                 ctx.beginPath();
                 ctx.arc(x, y, 4, 0, Math.PI * 2);
@@ -1309,7 +1457,7 @@
                 ctx.lineWidth = 2;
                 ctx.stroke();
 
-                // 调整分数标签位置，避免重叠
+                // 调整分数标签位置
                 ctx.fillStyle = '#ff7e5f';
                 ctx.font = 'bold 12px Arial';
                 ctx.textAlign = 'center';
@@ -1331,15 +1479,27 @@
 
                 // 对于高分值，调整标签位置避免超出画布
                 if (score > 15) {
-                    // 高分值向内移动一点
                     scoreOffsetY *= 0.8;
                 }
 
+                // 为分数标签添加阴影提高可读性
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowBlur = 2;
+                ctx.shadowOffsetX = 1;
+                ctx.shadowOffsetY = 1;
+
                 ctx.fillText(score, x + scoreOffsetX, y + scoreOffsetY);
+
+                // 清除阴影效果
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
             });
         }
 
-        // 计算天赋得分 - 修正版
+
+        // 计算天赋得分 - 直接使用原始分值，不需要归一化
         function calculateScores() {
             const typeScores = {};
 
@@ -1365,8 +1525,9 @@
 
             // 验证所有问题是否都统计到了
             const totalAnswered = Object.values(typeScores).reduce((sum, score) => sum + score, 0);
-            const totalQuestionsAnswered = appState.answers.filter(answer => answer !== null).length * 5;
-            console.log("统计到的总分:", totalAnswered, "应有总分:", totalQuestionsAnswered);
+            const totalQuestionsAnswered = appState.answers.filter(answer => answer !== null).length;
+            console.log("已答题数量:", totalQuestionsAnswered);
+            console.log("统计到的总分:", totalAnswered, "应有总分:", totalQuestionsAnswered * 5);
 
             return typeScores;
         }
@@ -1399,7 +1560,7 @@
                 const rank = index + 1;
                 const rankClass = `rank-${rank}`;
 
-                // 根据分数确定描述类型
+                // 根据分数确定描述类型 - 直接使用原始分值判断
                 let descType = 'low';
                 if (talent.score >= 16) {
                     descType = 'high';
@@ -1442,17 +1603,14 @@
                 const color = talentColors[type] || '#4a6fa5';
 
                 let levelClass, levelText;
-                // 调整评分等级，最大得分是20分
-                if (score >= 16) {
+                // 评分等级基于原始分值
+                if (score >= 15) {
                     levelClass = 'level-high';
                     levelText = '非常擅长';
-                } else if (score >= 12) {
+                } else if (score >= 10) {
                     levelClass = 'level-medium';
                     levelText = '比较擅长';
-                } else if (score >= 8) {
-                    levelClass = 'level-low';
-                    levelText = '一般擅长';
-                } else if (score >= 4) {
+                } else if (score >= 5) {
                     levelClass = 'level-low';
                     levelText = '不太擅长';
                 } else {
@@ -1504,6 +1662,8 @@
 
         // 显示结果
         function showResults() {
+            console.log("开始显示结果...");
+
             // 计算得分
             const typeScores = calculateScores();
 
