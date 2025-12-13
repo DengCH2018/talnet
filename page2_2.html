@@ -940,7 +940,8 @@
         <!-- 网站标题 -->
         <div class="header">
             <h1>天赋自测</h1>
-            <p>本测试来自《做自己擅长的事，还是喜欢的？》，作者为Aljoscha Neubauer。本测试不会收集任何用户信息，关闭页面后数据将自动删除。</p>
+            <p>本测试来自《做自己擅长的事，还是喜欢的？》，作者为Aljoscha Neubauer。本测试不会收集任何用户信息，关闭页面后数据将自动删除，请放心测试。越诚实地回答下列问题测试结果将会越准确。</p>
+            <p>（tips:PC端如果页面显示不全，请减少页面缩放比例即可。）
         </div>
 
         <!-- 主要内容区域 -->
@@ -1272,7 +1273,7 @@
                 } else {
                     console.error("答案未正确保存，取消自动跳转");
                 }
-            }, 100);
+            }, 10);
         }
 
         // 转到下一题
@@ -1603,13 +1604,13 @@
 
                 let levelClass, levelText;
                 // 评分等级基于原始分值
-                if (score >= 15) {
+                if (score >= 16) {
                     levelClass = 'level-high';
                     levelText = '非常擅长';
-                } else if (score >= 10) {
+                } else if (score >= 12) {
                     levelClass = 'level-medium';
                     levelText = '比较擅长';
-                } else if (score >= 5) {
+                } else if (score >= 8) {
                     levelClass = 'level-low';
                     levelText = '不太擅长';
                 } else {
@@ -1763,4 +1764,3 @@
     </script>
 </body>
 </html>
-
